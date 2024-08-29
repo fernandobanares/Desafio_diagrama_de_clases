@@ -1,7 +1,7 @@
 from usuario import Usuario
 
 class ListadoRespuestas:
-    def __init__(self, usuario, respuestas):
+    def __init__(self, usuario: str, respuestas: str):
         self.usuario = usuario
         self.respuestas = respuestas
 
