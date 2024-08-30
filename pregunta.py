@@ -4,7 +4,7 @@ class Pregunta():
     def __init__(self, enunciado: str, ayuda: str, alternativas: list, requerido) -> None:
         self.enunciado = enunciado
         self.ayuda = ayuda
-        self.__alternativas = [Alternativa(a["Contenido"], a.get["ayuda", ""]) for a in alternativas]
+        self.__alternativas = [Alternativa(a["Contenido"], a.get("ayuda", "")) for a in alternativas]
         self.requerido = requerido
         
     def mostrar_pregunta(self) -> None:
