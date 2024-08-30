@@ -1,4 +1,3 @@
-# usuario.py
 from typing import Union
 from encuesta import Encuesta, EncuestaLimitadaEdad, EncuestaLimitadaRegion
 from listado_respuestas import ListadoRespuestas
