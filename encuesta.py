@@ -1,42 +1,44 @@
 from pregunta import Pregunta
+from listado_respuestas import ListadoRespuestas
 
-class Encuesta:
-    def __init__(self, nombre: str, preguntas=None):
+class Encuesta():
+    def __init__(self, nombre: str, preguntas: list) -> None:
         self.nombre = nombre
-        self.preguntas = preguntas if preguntas else []
-        self.listados_respuestas = []
+        self.__preguntas = preguntas
+        self.__listados_respuestas = []
 
-    def mostrar(self):
-        resultado = f"Encuesta: {self.nombre}\n"
-        for pregunta in self.preguntas:
-            resultado += pregunta.mostrar() + "\n"
-        return resultado
+    def agregar_respuesta(self, listado_respuestas: ListadoRespuestas) -> None:
+        self.__listados_respuestas.append(listado_respuestas)
 
-    def agregar_respuestas(self, listado_respuestas: str):
-        self.listados_respuestas.append(listado_respuestas)
-
-    def modificar_nombre(self, nuevo_nombre: str):
-        self.nombre = nuevo_nombre
+    def mostrar(self) -> None:
+        print(f"Encuesta: {self.nombre}")
+        for pregunta in self.__preguntas:
+            pregunta.mostrar_pregunta()
 
 class EncuestaLimitadaEdad(Encuesta):
-    def __init__(self, nombre: str, edad_min: int, edad_max: int, preguntas=None):
+    def __init__(self, nombre: str, edad_min: int, edad_max: int, preguntas: list) -> None:
         super().__init__(nombre, preguntas)
-        self.edad_min = edad_min
-        self.edad_max = edad_max
+        self.__edad_min = edad_min
+        self.__edad_max = edad_max
 
-    def agregar_respuestas(self, listado_respuestas: list):
-        if self.edad_min <= listado_respuestas.usuario.edad <= self.edad_max:
-            super().agregar_respuestas(listado_respuestas)
+    def agregar_respuesta(self, listado_respuestas: ListadoRespuestas) -> None:
+        usuario = listado_respuestas.usuario
+        if self.__edad_min <= usuario.edad <= self.__edad_max:
+            super().agregar_respuesta(listado_respuestas)
         else:
-            print("Usuario fuera del rango de edad permitido.")
+            print(f"Usuario {usuario.correo} no está dentro del rango de edad permitido.")
 
 class EncuestaLimitadaRegion(Encuesta):
-    def __init__(self, nombre: str, regiones_permitidas: list, preguntas=None):
+    def __init__(self, nombre: str, regiones: list, preguntas: list) -> None:
         super().__init__(nombre, preguntas)
-        self.regiones_permitidas = regiones_permitidas
+        self.__regiones = regiones
 
-    def agregar_respuestas(self, listado_respuestas: list):
-        if listado_respuestas.usuario.region in self.regiones_permitidas:
-            super().agregar_respuestas(listado_respuestas)
+    def agregar_respuesta(self, listado_respuestas: ListadoRespuestas) -> None:
+        usuario = listado_respuestas.usuario
+        if usuario.region in self.__regiones:
+            super().agregar_respuesta(listado_respuestas)
         else:
-            print("Usuario fuera de las regiones permitidas.")
+            print(f"Usuario {usuario.correo} no está en una región permitida.")
+
+        
+    

@@ -1,23 +1,15 @@
 from alternativa import Alternativa
 
-class Pregunta:
-    def __init__(self, enunciado: str, ayuda=None, es_requerida=False, alternativas=None):
+class Pregunta():
+    def __init__(self, enunciado: str, ayuda: str, alternativas: list, requerido) -> None:
         self.enunciado = enunciado
         self.ayuda = ayuda
-        self.es_requerida = es_requerida
-        self.alternativas = alternativas if alternativas else []
-
-    def mostrar(self):
-        resultado = f"{self.enunciado}\n"
-        if self.ayuda:
-            resultado += f"Ayuda: {self.ayuda}\n"
-        resultado += "Alternativas:\n"
-        for alternativa in self.alternativas:
-            resultado += f" - {alternativa.mostrar()}\n"
-        return resultado
-
-    def modificar_enunciado(self, nuevo_enunciado: str):
-        self.enunciado = nuevo_enunciado
-
-    def modificar_ayuda(self, nueva_ayuda: str):
-        self.ayuda = nueva_ayuda
+        self.__alternativas = [Alternativa(a["Contenido"], a.get["ayuda", ""]) for a in alternativas]
+        self.requerido = requerido
+        
+    def mostrar_pregunta(self) -> None:
+        print(self.enunciado)
+        if (self.ayuda):
+            print(f"({self.ayuda})")
+        for a in self.__alternativas:
+            a.mostrar_alternativa()

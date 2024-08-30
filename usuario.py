@@ -1,17 +1,39 @@
+# usuario.py
+from typing import Union
+from encuesta import Encuesta, EncuestaLimitadaEdad, EncuestaLimitadaRegion
+from listado_respuestas import ListadoRespuestas
+
 class Usuario:
-    def __init__(self, correo: str, edad: int, region: str):
+    def __init__(self, correo: str, edad: int, region: int):
         self.correo = correo
         self.edad = edad
         self.region = region
 
-    def modificar_correo(self, nuevo_correo: str):
-        self.correo = nuevo_correo
+    @property
+    def correo(self) -> str:
+        return self.__correo
 
-    def modificar_edad(self, nueva_edad: int):
-        self.edad = nueva_edad
+    @correo.setter
+    def correo(self, correo: str) -> None:
+        self.__correo = correo
 
-    def modificar_region(self, nueva_region: str):
-        self.region = nueva_region
+    @property
+    def edad(self) -> int:
+        return self.__edad
 
-    def contestar_encuesta(self, encuesta: str, listado_respuestas: str):
-        encuesta.agregar_respuestas(listado_respuestas)
+    @edad.setter
+    def edad(self, edad: int) -> None:
+        self.__edad = edad
+
+    @property
+    def region(self) -> int:
+        return self.__region
+
+    @region.setter
+    def region(self, region: int) -> None:
+        self.__region = region
+
+    def contestar_encuesta(self, encuesta: Union[Encuesta, EncuestaLimitadaEdad, EncuestaLimitadaRegion], respuestas: list) -> None:
+        listado_respuestas = ListadoRespuestas(self, respuestas)
+        encuesta.agregar_respuesta(listado_respuestas)
+
